@@ -38,13 +38,17 @@ SELECT
 
 10- Selezionare gli id dei videogame che hanno ricevuto almeno una recensione da 5 stelle, mostrandoli una sola volta (443)
 
-    -- select distinct videogame_id  from reviews r where rating = 5; --
+    -- select distinct videogame_id from reviews r where rating = 5; --
 
 *********** BONUS ***********
 
 11- Selezionare il numero e la media delle recensioni per il videogioco con ID = 412 (review number = 12, avg_rating = 3.16 circa)
 
+    -- select count(*), round(avg(rating), 2) from reviews where videogames_id = 412; --
+
 12- Selezionare il numero di videogame che la software house con ID = 1 ha rilasciato nel 2018 (13)
+
+    -- select count(*) from videogames where software_house_id = 1 and year(release_date) = '2018-%'; --
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -81,7 +85,8 @@ JOIN
 1- Selezionare i dati di tutti giocatori che hanno scritto almeno una recensione, mostrandoli una sola volta (996)
 
     --  select distinct player_id
-        from players p join reviews; --
+        from players p
+        join reviews; --
 
 2- Sezionare tutti i videogame dei tornei tenuti nel 2016, mostrandoli una sola volta (226)
 
@@ -112,6 +117,7 @@ JOIN
         join awards ON award_videogame.award_id = awards.id; --
 
 6- Selezionare categorie e classificazioni PEGI dei videogiochi che hanno ricevuto recensioni da 4 e 5 stelle, mostrandole una sola volta (3363)
+
     --  select distinct c.name as category, pl.name as pegi_classification, v.name as videogames_name
         from reviews r
         join videogames v on r.videogame_id = v.id
@@ -132,6 +138,13 @@ JOIN
         where players.name like 'S%';
 
 8- Selezionare le città in cui è stato giocato il gioco dell'anno del 2018 (36)
+
+     -- select t.name, t.city
+        from tournaments t
+        join tournament_videogame tv on t.id = tv.tournament_id
+        join award_videogame av on tv.videogame_id = av.videogame_id
+        join awards a on av.award_id 0 a.id
+        where a.name = 'Gioco dell'anno' and av.'year' = 2018
 
 9- Selezionare i giocatori che hanno giocato al gioco più atteso del 2018 in un torneo del 2019 (3306)
 
